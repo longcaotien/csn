@@ -1,6 +1,25 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { exams } from "./content";
 
+const TYP_URL = `${import.meta.env.BASE_URL}de-csc.typ`;
+
+function load<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw === null ? fallback : (JSON.parse(raw) as T);
+  } catch {
+    return fallback;
+  }
+}
+
+function save(key: string, value: unknown) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    /* bỏ qua */
+  }
+}
+
 type IconName = "eye" | "code" | "print" | "close" | "copy" | "download";
 
 function Icon({ name }: { name: IconName }) {
@@ -52,8 +71,11 @@ function Icon({ name }: { name: IconName }) {
 }
 
 export default function App() {
-  const [activeExamId, setActiveExamId] = useState(exams[0].id);
-  const [answersVisible, setAnswersVisible] = useState(true);
+  const [activeExamId, setActiveExamId] = useState<string>(() => {
+    const id = load<string>("csn.exam", exams[0].id);
+    return exams.some((e) => e.id === id) ? id : exams[0].id;
+  });
+  const [answersVisible, setAnswersVisible] = useState<boolean>(() => load("csn.answers", true));
   const [codeOpen, setCodeOpen] = useState(false);
   const [source, setSource] = useState("");
   const [sourceLoading, setSourceLoading] = useState(false);
@@ -62,12 +84,15 @@ export default function App() {
   const activeExam = exams.find((exam) => exam.id === activeExamId) ?? exams[0];
   const activeIndex = exams.findIndex((exam) => exam.id === activeExam.id) + 1;
 
+  useEffect(() => save("csn.exam", activeExamId), [activeExamId]);
+  useEffect(() => save("csn.answers", answersVisible), [answersVisible]);
+
   useEffect(() => {
     if (!codeOpen || source) return;
     let cancelled = false;
     setSourceLoading(true);
 
-    fetch("/de-csc.typ")
+    fetch(TYP_URL)
       .then((response) => {
         if (!response.ok) throw new Error("Không thể tải mã Typst.");
         return response.text();
@@ -86,6 +111,13 @@ export default function App() {
       cancelled = true;
     };
   }, [codeOpen, source]);
+
+  useEffect(() => {
+    if (!codeOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setCodeOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [codeOpen]);
 
   async function copySource() {
     if (!source) return;
@@ -245,7 +277,7 @@ export default function App() {
                   <Icon name="copy" />
                   <span>{copyStatus || "Sao chép"}</span>
                 </button>
-                <a className="quiet-button download-link" href="/de-csc.typ" download="de-cap-so.typ">
+                <a className="quiet-button download-link" href={TYP_URL} download="de-cap-so.typ">
                   <Icon name="download" />
                   <span>Tải tệp .typ</span>
                 </a>
