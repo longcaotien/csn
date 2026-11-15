@@ -1,6 +1,6 @@
-# Format Questions Using Typst
+# Mạch Số · Cấp số & dãy số
 
-Ứng dụng web (React + Vite + Tailwind CSS) giúp định dạng đề thi/câu hỏi bằng Typst: xem trước, xem mã, in và tải file `.typ`. Công thức và con số được dựng bằng LaTeX (KaTeX); viết công thức trong `src/content.tsx` bằng `<M t="..." />` (trong dòng) và `<D t="..." />` (riêng dòng).
+Trang web (React + Vite + Tailwind CSS) trình bày phiếu ôn tập Toán 11 về cấp số cộng, cấp số nhân và dãy số: xem đề, bật/tắt đáp số và in ra A4/PDF. Công thức và con số được dựng bằng LaTeX (KaTeX); viết công thức trong `src/content.tsx` bằng `<M t="..." />` (trong dòng) và `<D t="..." />` (riêng dòng).
 
 ## Chạy cục bộ
 ```bash
