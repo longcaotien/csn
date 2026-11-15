@@ -315,8 +315,7 @@ a:focus-visible {
   backdrop-filter: saturate(1.4) blur(14px);
 }
 
-.toolbar-actions,
-.code-actions > div {
+.toolbar-actions {
   display: flex;
   align-items: center;
 }
@@ -373,8 +372,7 @@ a:focus-visible {
 }
 
 .quiet-button,
-.print-button,
-.icon-button {
+.print-button {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
@@ -393,22 +391,15 @@ a:focus-visible {
     transform 220ms var(--ease), box-shadow 220ms ease;
 }
 
-.quiet-button:hover,
-.icon-button:hover {
+.quiet-button:hover {
   border-color: #dedbd3;
   background: rgba(255, 254, 250, 0.9);
   color: var(--ink);
 }
 
 .quiet-button:active,
-.print-button:active,
-.icon-button:active {
+.print-button:active {
   transform: scale(0.96);
-}
-
-.quiet-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
 }
 
 .switch {
@@ -841,142 +832,6 @@ a:focus-visible {
   letter-spacing: 0.04em;
 }
 
-/* ---------- Modal ---------- */
-
-.modal-backdrop {
-  position: fixed;
-  z-index: 20;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(27, 32, 34, 0.5);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  animation: fade-in 240ms ease both;
-}
-
-.modal-backdrop.is-closing {
-  animation: fade-out 220ms ease both;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-.code-dialog {
-  width: min(900px, 100%);
-  max-height: min(86vh, 900px);
-  display: flex;
-  flex-direction: column;
-  padding: 25px 27px 19px;
-  border: 1px solid #e4e0d8;
-  border-radius: 20px;
-  background: #fffefa;
-  box-shadow: 0 40px 100px rgba(20, 25, 28, 0.32);
-  animation: dialog-in 420ms var(--ease-spring) both;
-}
-
-.is-closing .code-dialog {
-  animation: dialog-out 220ms ease both;
-}
-
-@keyframes dialog-in {
-  from { opacity: 0; transform: translateY(22px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes dialog-out {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(12px) scale(0.98); }
-}
-
-.dialog-heading,
-.code-actions,
-.code-actions > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dialog-heading h2 {
-  margin: 5px 0 0;
-  font-family: var(--serif);
-  font-size: 27px;
-  font-weight: 500;
-}
-
-.icon-button {
-  width: 38px;
-  min-width: 38px;
-  padding: 0;
-  border-color: #e7e3dc;
-}
-
-.icon-button:hover {
-  transform: rotate(90deg);
-}
-
-.code-actions {
-  min-height: 50px;
-  margin-top: 13px;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  color: #7c827f;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-}
-
-.code-actions > div {
-  gap: 5px;
-}
-
-.code-actions .quiet-button {
-  min-height: 32px;
-  font-family: inherit;
-  font-size: 10px;
-}
-
-.code-window {
-  min-height: 150px;
-  flex: 1;
-  overflow: auto;
-  margin-top: 12px;
-  padding: 18px;
-  border-radius: 12px;
-  background: #20282d;
-  color: #e6e7df;
-  scrollbar-color: #647078 #20282d;
-}
-
-.code-window pre {
-  min-width: max-content;
-  margin: 0;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 11px;
-  line-height: 1.6;
-  tab-size: 2;
-  white-space: pre;
-}
-
-.code-state {
-  margin: 0;
-  color: #d4d8d5;
-  font-size: 12px;
-}
-
-.dialog-footnote {
-  margin: 12px 0 0;
-  color: #838987;
-  font-size: 10px;
-}
-
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -1150,31 +1005,6 @@ a:focus-visible {
     font-size: 7px;
   }
 
-  .modal-backdrop {
-    padding: 12px;
-  }
-
-  .code-dialog {
-    max-height: 92vh;
-    padding: 18px 15px 14px;
-    border-radius: 16px;
-  }
-
-  .code-actions {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 3px;
-    padding: 7px 0;
-  }
-
-  .code-actions > div {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .code-window {
-    padding: 13px;
-  }
 }
 
 /* ---------- Giảm chuyển động ---------- */
@@ -1223,8 +1053,7 @@ a:focus-visible {
   .backdrop-art,
   .intro,
   .toolbar,
-  .page-note,
-  .modal-backdrop {
+  .page-note {
     display: none !important;
   }
 
